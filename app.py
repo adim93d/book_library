@@ -19,12 +19,15 @@ def add_author():
         return render_template('add_author.html')
 
     if request.method == 'POST':
-        birth_date = datetime.datetime.strptime(request.form['birth_date'], '%Y-%m-%d').date()
-        date_of_death = datetime.datetime.strptime(request.form['date_of_death'], '%Y-%m-%d').date()
+        birth_date = request.form['birth_date']
+        date_of_death = request.form['date_of_death']
+        author_name = request.form['author_name']
         author = Author(
-            author_name=request.form['author_name'],
+
+            author_name=author_name,
             birth_date=birth_date,
-            date_of_death=date_of_death)
+            date_of_death=date_of_death
+        )
         db.session.add(author)
         db.session.commit()
         return f'author created'
@@ -32,7 +35,7 @@ def add_author():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
+#
+#
 # with app.app_context():
 #     db.create_all()

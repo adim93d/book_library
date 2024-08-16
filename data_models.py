@@ -9,8 +9,8 @@ class Author(db.Model):
 
     author_id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     author_name = sa.Column(sa.String)
-    birth_date = sa.Column(sa.Date)
-    date_of_death = sa.Column(sa.Date)
+    birth_date = sa.Column(sa.String)
+    date_of_death = sa.Column(sa.String)
 
 
 class Book(db.Model):
