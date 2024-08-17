@@ -1,13 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends 'base.html' %}
+
+{% block head %}
     <title>Add Author Form</title>
-</head>
-<body>
+{% endblock %}
+
+
+{% block body %}
     <h1>Add author</h1>
     <form action="/add_author" method="POST">
         <label for="author_name">Name:</label><br>
@@ -19,11 +17,4 @@
         <input type="submit" value="Submit">
     </form>
 
-</body>
-</html>
-
-
-<!--author_id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    author_name = sa.Column(sa.String)
-    birth_date = sa.Column(sa.Date)
-    date_of_death = sa.Column(sa.Date)-->
+{% endblock %}
