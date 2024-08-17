@@ -21,3 +21,4 @@ class Book(db.Model):
     title = sa.Column(sa.String)
     publication_year = sa.Column(sa.Integer)
     author_id = sa.Column(sa.Integer, sa.ForeignKey('authors.author_id'))
+    # book_cover = sa.Column(sa.String)

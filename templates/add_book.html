@@ -1,10 +1,24 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+    <title>Add Book Form</title>
 {% endblock %}
 
 
 {% block body %}
+    <h1>Add Book</h1>
+    <form action="/add_book" method="POST">
+        <select name="author" id="author" style="width:100px">
+            {% for author in authors %}
+            <option value="{{ author.author_id }}">{{ author.author_name }}</option>            {% endfor %}
+        </select>
+        <label for="title">Book title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="publication_year">Publication year (YYYY):</label><br>
+        <input type="text" id="publication_year" name="publication_year"><br>
+        <label for="isbn">ISBN:</label><br>
+        <input type="number" id="isbn" name="isbn"><br><br>
+        <input type="submit" value="Submit">
+    </form>
 
 {% endblock %}
