@@ -3,9 +3,10 @@ from crypt import methods
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from data_models import db, Author, Book
+import book_information
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data2/library.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data2/library2.sqlite'
 db.init_app(app)
 
 
@@ -51,7 +52,8 @@ def add_book():
             title=title,
             isbn=isbn,
             publication_year=publication_year,
-            author_id=author_id
+            author_id=author_id,
+            book_cover=book_information.cover_search(isbn)
         )
         db.session.add(book)
         db.session.commit()
