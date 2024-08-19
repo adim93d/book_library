@@ -12,6 +12,8 @@ class Author(db.Model):
     birth_date = sa.Column(sa.String)
     date_of_death = sa.Column(sa.String)
 
+    books = db.relationship('Book', back_populates='author')
+
 
 class Book(db.Model):
     __tablename__ = 'books'
@@ -22,3 +24,5 @@ class Book(db.Model):
     publication_year = sa.Column(sa.Integer)
     author_id = sa.Column(sa.Integer, sa.ForeignKey('authors.author_id'))
     book_cover = sa.Column(sa.String)
+
+    author = db.relationship('Author', back_populates='books')

@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Books Alchemy Library Long Support</title>
+    <title>My BALLS</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Welcome to BALLS</h1>
+    <h1>Welcome to my BALLS</h1>
     <h3>Books Alchemy Library Long Support</h3>
+
+    <a href="{{ url_for('home', sort_by='book_id') }}">Sort by Book ID</a><br>
+    <a href="{{ url_for('home', sort_by='title_asc') }}">Sort by Title (A-Z)</a><br>
+    <a href="{{ url_for('home', sort_by='title_desc') }}">Sort by Title (Z-A)</a><br>
+    <a href="{{ url_for('home', sort_by='year_asc') }}">Sort by Year (Oldest First)</a><br>
+    <a href="{{ url_for('home', sort_by='year_desc') }}">Sort by Year (Newest First)</a><br>
+
 
     <table>
         <tr>
@@ -14,7 +21,7 @@
             <th>Title</th>
             <th>ISBN</th>
             <th>Cover Photo</th>
-            <th>Author ID</th>
+            <th>Author</th>
             <th>Publication Year</th>
         </tr>
         {% for book in books %}
@@ -23,7 +30,7 @@
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>
                 <td><img src="{{ book.book_cover }}"></td>
-                <td>{{ book.author_id }}</td>
+                <td>{{ book.author.author_name }}</td>
                 <td>{{ book.publication_year }}</td>
             </tr>
         {% endfor %}

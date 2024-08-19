@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from data_models import db, Author, Book
 import book_information
+from sqlalchemy import asc, desc
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data2/library2.sqlite'
@@ -12,7 +13,21 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    books = Book.query.all()
+    sort_by = request.args.get('sort_by', 'book_id')
+
+    if sort_by == 'book_id':
+        books = Book.query.order_by(asc(Book.book_id)).all()
+    elif sort_by == 'title_asc':
+        books = Book.query.order_by(asc(Book.title)).all()
+    elif sort_by == 'title_desc':
+        books = Book.query.order_by(desc(Book.title)).all()
+    elif sort_by == 'year_asc':
+        books = Book.query.order_by(asc(Book.publication_year)).all()
+    elif sort_by == 'year_desc':
+        books = Book.query.order_by(desc(Book.publication_year)).all()
+    else:
+        books = Book.query.all()
+
     return render_template('index.html', books=books)
 
 
