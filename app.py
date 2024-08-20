@@ -4,29 +4,40 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from data_models import db, Author, Book
 import book_information
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, or_
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../data2/library2.sqlite'
 db.init_app(app)
 
-
 @app.route('/')
 def home():
+    search_query = request.args.get('search_query', '')
     sort_by = request.args.get('sort_by', 'book_id')
 
+    # Base query with a join to include author information
+    query = Book.query.join(Author)
+
+    # Filter by search query (partial search with ilike)
+    if search_query:
+        query = query.filter(or_(
+            Book.title.ilike(f'%{search_query}%'),
+            Author.author_name.ilike(f'%{search_query}%')
+        ))
+
+    # Apply sorting to the filtered query
     if sort_by == 'book_id':
-        books = Book.query.order_by(asc(Book.book_id)).all()
+        query = query.order_by(asc(Book.book_id))
     elif sort_by == 'title_asc':
-        books = Book.query.order_by(asc(Book.title)).all()
+        query = query.order_by(asc(Book.title))
     elif sort_by == 'title_desc':
-        books = Book.query.order_by(desc(Book.title)).all()
+        query = query.order_by(desc(Book.title))
     elif sort_by == 'year_asc':
-        books = Book.query.order_by(asc(Book.publication_year)).all()
+        query = query.order_by(asc(Book.publication_year))
     elif sort_by == 'year_desc':
-        books = Book.query.order_by(desc(Book.publication_year)).all()
-    else:
-        books = Book.query.all()
+        query = query.order_by(desc(Book.publication_year))
+
+    books = query.all()
 
     return render_template('index.html', books=books)
 

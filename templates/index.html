@@ -8,6 +8,11 @@
     <h1>Welcome to my BALLS</h1>
     <h3>Books Alchemy Library Long Support</h3>
 
+    <form method="GET" action="{{ url_for('home') }}">
+        <input type="text" name="search_query" placeholder="Search by title or author" value="{{ request.args.get('search_query', '') }}">
+        <button type="submit">Search</button>
+    </form>
+
     <a href="{{ url_for('home', sort_by='book_id') }}">Sort by Book ID</a><br>
     <a href="{{ url_for('home', sort_by='title_asc') }}">Sort by Title (A-Z)</a><br>
     <a href="{{ url_for('home', sort_by='title_desc') }}">Sort by Title (Z-A)</a><br>
