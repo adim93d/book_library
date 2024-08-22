@@ -26,7 +26,7 @@ This is a simple Flask-based library application that allows users to manage boo
 1. **Clone the Repository**:
 
    \`\`\`bash
-   git clone https://github.com/yourusername/library-app.git
+   git clone https://github.com/adim93d/book_library.git
    cd library-app
    \`\`\`
 
