@@ -1,48 +1,56 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>My BALLS</title>
+    <title>My Library - Home</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Welcome to my BALLS</h1>
-    <h3>Books Alchemy Library Long Support</h3>
+    <h1 class="text-center">Books Alchemy Library Long Support</h1>
 
-    <form method="GET" action="{{ url_for('home') }}">
-        <input type="text" name="search_query" placeholder="Search by title or author" value="{{ request.args.get('search_query', '') }}">
-        <button type="submit">Search</button>
+    <form class="d-flex my-3" method="GET" action="{{ url_for('home') }}">
+        <input class="form-control me-2" type="search" name="search_query" placeholder="Search by title or author" value="{{ request.args.get('search_query', '') }}">
+        <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
-    <a href="{{ url_for('home', sort_by='book_id') }}">Sort by Book ID</a><br>
-    <a href="{{ url_for('home', sort_by='title_asc') }}">Sort by Title (A-Z)</a><br>
-    <a href="{{ url_for('home', sort_by='title_desc') }}">Sort by Title (Z-A)</a><br>
-    <a href="{{ url_for('home', sort_by='year_asc') }}">Sort by Year (Oldest First)</a><br>
-    <a href="{{ url_for('home', sort_by='year_desc') }}">Sort by Year (Newest First)</a><br>
+    <div class="btn-group mb-3">
+        <a href="{{ url_for('home', sort_by='book_id') }}" class="btn btn-secondary">Sort by Book ID</a>
+        <a href="{{ url_for('home', sort_by='title_asc') }}" class="btn btn-secondary">Sort by Title (A-Z)</a>
+        <a href="{{ url_for('home', sort_by='title_desc') }}" class="btn btn-secondary">Sort by Title (Z-A)</a>
+        <a href="{{ url_for('home', sort_by='year_asc') }}" class="btn btn-secondary">Sort by Year (Oldest First)</a>
+        <a href="{{ url_for('home', sort_by='year_desc') }}" class="btn btn-secondary">Sort by Year (Newest First)</a>
+    </div>
 
-
-    <table>
-        <tr>
-            <th>Book ID</th>
-            <th>Title</th>
-            <th>ISBN</th>
-            <th>Cover Photo</th>
-            <th>Author</th>
-            <th>Publication Year</th>
-        </tr>
-        {% for book in books %}
+    <table class="table table-striped">
+        <thead class="table-dark">
             <tr>
-                <td>{{ book.book_id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.isbn }}</td>
-                <td><img src="{{ book.book_cover }}"></td>
-                <td>{{ book.author.author_name }}</td>
-                <td>{{ book.publication_year }}</td>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>ISBN</th>
+                <th>Cover Photo</th>
+                <th>Author</th>
+                <th>Publication Year</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.book_id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td><img src="{{ book.book_cover }}" alt="Cover Photo" class="img-fluid" style="max-height: 100px;"></td>
+                    <td>{{ book.author.author_name }}</td>
+                    <td>{{ book.publication_year }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_book', book_id=book.book_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                            <button type="submit" class="btn btn-danger">Delete Book</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    <a href="/add_book">Add a book to the database</a>
-    <br><br>
-    <a href="/add_author">Add an author to the database</a>
 
+    <a href="/add_book" class="btn btn-primary">Add a Book</a>
+    <a href="/add_author" class="btn btn-primary">Add an Author</a>
 {% endblock %}

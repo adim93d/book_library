@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>Add Author Form</title>
+    <title>Add Author</title>
 {% endblock %}
 
-
 {% block body %}
-    <h1>Add author</h1>
-    <form action="/add_author" method="POST">
-        <label for="author_name">Name:</label><br>
-        <input type="text" id="author_name" name="author_name"><br>
-        <label for="birth_date">Birthdate (YYYY-MM-DD):</label><br>
-        <input type="text" id="birth_date" name="birth_date"><br>
-        <label for="date_of_death">Date of death (YYYY-MM-DD):</label><br>
-        <input type="text" id="date_of_death" name="date_of_death"><br><br>
-        <input type="submit" value="Submit">
+    <h1>Add Author</h1>
+    <form action="/add_author" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="author_name" class="form-label">Name</label>
+            <input type="text" id="author_name" name="author_name" class="form-control" required>
+            <div class="invalid-feedback">Please provide a name.</div>
+        </div>
+        <div class="mb-3">
+            <label for="birth_date" class="form-label">Birthdate (YYYY-MM-DD)</label>
+            <input type="text" id="birth_date" name="birth_date" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="date_of_death" class="form-label">Date of Death (YYYY-MM-DD)</label>
+            <input type="text" id="date_of_death" name="date_of_death" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
     </form>
-
 {% endblock %}
